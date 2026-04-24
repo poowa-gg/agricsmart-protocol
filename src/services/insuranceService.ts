@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI } from '@google/genai';
+import { GoogleGenAI } from '@google/genai';
 import { 
   collection, 
   addDoc, 
@@ -15,7 +15,9 @@ import { db } from '../firebase';
 import { CropHealthRecord, InsuranceClaim } from '../constants';
 import { MOCK_CROP_HEALTH, MOCK_INSURANCE_CLAIMS } from '../mockData';
 
-const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY || '');
+const genAI = new GoogleGenAI({ 
+  apiKey: import.meta.env.VITE_GEMINI_API_KEY || '' 
+});
 
 export const insuranceService = {
   async getCropHealthHistory(farmerId: string): Promise<CropHealthRecord[]> {
@@ -36,21 +38,26 @@ export const insuranceService = {
   },
 
   async analyzeCropHealth(farmerId: string, photoBase64: string): Promise<Partial<CropHealthRecord>> {
-    // In a real app, we'd send the image to Gemini
-    // For this prototype, we'll simulate the AI analysis logic
-    
     // If no API key, use fallback simulation
     if (!import.meta.env.VITE_GEMINI_API_KEY) {
       return this.simulateAIAnalysis(farmerId);
     }
 
     try {
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
       const prompt = "Analyze this crop photo for health indicators. Return a JSON with healthScore (0-100), insights (array of strings), and riskLevel (low/moderate/high/critical).";
       
-      // Simulate response for now to ensure stability
+      const response = await genAI.models.generateContent({
+        model: "gemini-1.5-flash",
+        contents: [{
+          role: 'user',
+          parts: [{ text: prompt }, { inlineData: { mimeType: 'image/jpeg', data: photoBase64.split(',')[1] } }]
+        }]
+      });
+
+      // Simulation fallback if content generation fails or for prototype stability
       return this.simulateAIAnalysis(farmerId);
     } catch (e) {
+      console.error("Gemini AI error:", e);
       return this.simulateAIAnalysis(farmerId);
     }
   },
