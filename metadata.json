@@ -1,0 +1,9 @@
+{
+  "name": "AgricSmart Connect",
+  "description": "A credit bureau platform for smallholder farmers in Nigeria, enabling creditworthiness through agent verification and a living Trust Score system.",
+  "requestFramePermissions": [
+    "camera",
+    "geolocation"
+  ],
+  "majorCapabilities": []
+}

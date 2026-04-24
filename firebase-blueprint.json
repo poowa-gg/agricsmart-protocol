@@ -1,0 +1,64 @@
+{
+  "entities": {
+    "Farmer": {
+      "title": "Farmer Profile",
+      "description": "Core data for a smallholder farmer in Nigeria.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "lga": { "type": "string" },
+        "state": { "type": "string" },
+        "farmSize": { "type": "number" },
+        "primaryCrop": { "type": "string" },
+        "trustScore": { "type": "number" },
+        "enrollmentDate": { "type": "string", "format": "date-time" },
+        "verificationStatus": { "type": "string", "enum": ["pending", "verified", "rejected"] },
+        "agentId": { "type": "string" },
+        "insuranceStatus": { "type": "boolean" },
+        "isCreditworthy": { "type": "boolean" }
+      },
+      "required": ["name", "phone", "lga", "state", "trustScore", "verificationStatus"]
+    },
+    "Activity": {
+      "title": "Trust Activity",
+      "description": "Financial or verification event that influences the Trust Score.",
+      "type": "object",
+      "properties": {
+        "farmerId": { "type": "string" },
+        "type": { "type": "string", "enum": ["verification", "input_purchase", "harvest_sale", "insurance", "milestone"] },
+        "points": { "type": "number" },
+        "date": { "type": "string", "format": "date-time" },
+        "description": { "type": "string" }
+      },
+      "required": ["farmerId", "type", "points", "date"]
+    },
+    "Agent": {
+      "title": "Verification Agent",
+      "description": "Local agent responsible for verifying farmers.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "location": { "type": "string" },
+        "earnings": { "type": "number" },
+        "farmersVerifiedCount": { "type": "number" }
+      },
+      "required": ["name", "phone", "location", "earnings"]
+    }
+  },
+  "firestore": {
+    "/farmers/{farmerId}": {
+      "schema": "Farmer",
+      "description": "Collection of all farmers."
+    },
+    "/activities/{activityId}": {
+      "schema": "Activity",
+      "description": "Chronological log of events impacting trust scores."
+    },
+    "/agents/{agentId}": {
+      "schema": "Agent",
+      "description": "Directory of active verification agents."
+    }
+  }
+}

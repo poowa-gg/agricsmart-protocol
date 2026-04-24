@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  
+  /* Primary Agric Green */
+  --color-ag-green-dark: #2D5A27;
+  --color-ag-green: #4CAF50;
+  
+  /* Trust Blue */
+  --color-trust-blue: #1E3A8A;
+  
+  /* Credit Gold */
+  --color-credit-gold: #D4AF37;
+  
+  /* Backgrounds & Neutrals */
+  --color-natural-bg: #F9F8F4;
+  --color-natural-border: #E5E2D9;
+  --color-natural-text: #1A1A1A;
+  --color-natural-muted: #8C8980;
+  --color-natural-soft: #F0EFEB;
+}
