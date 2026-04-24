@@ -1,7 +1,8 @@
-import { FarmerProfile, TrustActivity, Agent } from './constants';
+import { FarmerProfile, TrustActivity, Agent, CropHealthRecord, InsuranceClaim } from './constants';
 import { subDays, formatISO } from 'date-fns';
 
 export const MOCK_FARMERS: FarmerProfile[] = [
+  // ... existing farmers
   {
     id: 'F-001',
     name: 'Peter Okeke',
@@ -95,5 +96,44 @@ export const MOCK_AGENTS: Agent[] = [
     location: 'Karu, Nasarawa',
     earnings: 25500,
     farmersVerifiedCount: 51
+  }
+];
+
+export const MOCK_CROP_HEALTH: CropHealthRecord[] = [
+  {
+    id: 'CH-001',
+    farmerId: 'F-001',
+    date: formatISO(subDays(new Date(), 5)),
+    healthScore: 92,
+    insights: ['Strong vegetative growth', 'Optimum chlorophyll levels'],
+    climateData: {
+      rainfall: 120,
+      temperature: 28,
+      riskLevel: 'low'
+    }
+  },
+  {
+    id: 'CH-002',
+    farmerId: 'F-001',
+    date: formatISO(new Date()),
+    healthScore: 88,
+    insights: ['Slight water stress detected', 'Rainfall below 7-day average'],
+    climateData: {
+      rainfall: 45,
+      temperature: 32,
+      riskLevel: 'moderate'
+    }
+  }
+];
+
+export const MOCK_INSURANCE_CLAIMS: InsuranceClaim[] = [
+  {
+    id: 'IC-001',
+    farmerId: 'F-001',
+    date: formatISO(subDays(new Date(), 60)),
+    amount: 15000,
+    type: 'parametric',
+    status: 'processed',
+    triggerReason: 'Low rainfall index (Dry spell > 10 days)'
   }
 ];

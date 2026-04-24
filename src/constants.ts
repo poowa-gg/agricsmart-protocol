@@ -55,3 +55,27 @@ export interface Agent {
   earnings: number;
   farmersVerifiedCount: number;
 }
+
+export interface CropHealthRecord {
+  id: string;
+  farmerId: string;
+  date: string;
+  healthScore: number; // 0-100
+  insights: string[];
+  photoUrl?: string;
+  climateData: {
+    rainfall: number;
+    temperature: number;
+    riskLevel: 'low' | 'moderate' | 'high' | 'critical';
+  };
+}
+
+export interface InsuranceClaim {
+  id: string;
+  farmerId: string;
+  date: string;
+  amount: number;
+  type: 'parametric' | 'traditional';
+  status: 'pending' | 'processed' | 'rejected';
+  triggerReason: string;
+}
